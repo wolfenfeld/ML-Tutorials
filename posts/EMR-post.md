@@ -12,7 +12,9 @@
 
 Whenever you need to slice and dice a massive dataset, and _pandas_ or _SQL_ cannot do the trick - pam pam pam, Spark is here have no fear.
 
-In this post we will go over all the steps needed to spin up a spark cluster, fetch and process data, and finally load the results.
+This post comes after long and lonesome search for a tutorial on how to spin-up an EMR Cluster, read the relevant data from a table in RDS, executes a set of commands using Pyspark and dump the results to S3.
+
+The goal of this post is to provide an easy and comprehensive, step by step, guide, and save the time and frustration to anyone who wishes to construct such a system.
 
 Small disclaimer - an active AWS account is necessary for this tutorial.
 
@@ -30,17 +32,20 @@ In our solution we will use the following tools:
 
 - Apache Spark - an open-source distributed general-purpose cluster-computing framework.
 - Pyspark - the Python API for Spark.
-- EMR service - Elastic Map Reduce is AWS's managed Hadoop framework.
-- S3 service - AWS's storage service. In the solution we present in this post we assume that the raw data is stored on a S3 bucket.
-- Boto 3 - Boto is the Amazon Web Services (AWS) SDK for Python. It enables Python developers to create, configure, and manage AWS services.
+- EMR service - Elastic Map Reduce is AWS managed Hadoop framework.
+- S3 service - AWS storage service.
+- Boto 3 - Boto is the AWS SDK for Python. It enables Python developers to create, configure, and manage AWS services.
 
 ## Solution formulation
 
-- EMR loader
-- Bootstrap
-- S3 Connectors
-- Processing
+Our solution is comprised of 3 main scripts.
+
+- EMR loader - the python script that is in charge of spinning-up, configuring and running the EMR cluster.
+- Bootstrap - this script is used to configure each node in the cluster.
+- Processing - the python script that executes the data processing commands.
 
 ## Conclusion
 
-In this tutorial
+In this tutorial we have gone through the steps needed to spin-up an EMR Cluster, read the relevant data from a table in RDS, executes a set of commands using Pyspark and dump the results to S3.
+
+I hope this guide helped shed some light on how to use EMR to achieve the relevant results and would like to thank @nimrod_milo for helping me on this glorious quest.
