@@ -1,6 +1,13 @@
-# Taming the Hydra
+---
+layout: post
+title: Taming the Hydra
+description: |
+  A page showing Hydejack-specific markdown content.
+<!-- image: /assets/img/blog/example-content-iii.jpg -->
+noindex: true
+---
 
-## Outline
+# Outline
 
 1. Intro
 2. Problem formulation
@@ -8,9 +15,9 @@
 4. Solution formulation
 5. Conclusion
 
-## Intro
+# Intro
 
-Whenever you need to slice and dice a massive dataset, and _pandas_ or _SQL_ cannot do the trick - pam pam pam, Spark is here have no fear.
+Whenever you need to slice and dice a massive dataset, and _pandas_ or _SQL_ cannot do the trick - pam pam pam, have no fear _Spark_ is here.
 
 This post comes after long and lonesome search for a tutorial on how to spin-up an EMR Cluster, read the relevant data from a table in RDS, executes a set of commands using Pyspark and dump the results to S3.
 
@@ -18,7 +25,7 @@ The goal of this post is to provide an easy and comprehensive, step by step, gui
 
 Small disclaimer - an active AWS account is necessary for this tutorial.
 
-## Problem Formulation
+# Problem Formulation
 
 The problem that we are facing can be broken down into 3 (as always) sub-problems:
 
@@ -26,7 +33,7 @@ The problem that we are facing can be broken down into 3 (as always) sub-problem
 - Connecting to a data source for fetching and dumping the data.
 - Processing the raw data using the _Spark_ framework.
 
-## Tools description
+# Tools Description
 
 In our solution we will use the following tools:
 
@@ -36,7 +43,7 @@ In our solution we will use the following tools:
 - S3 service - AWS storage service.
 - Boto 3 - Boto is the AWS SDK for Python. It enables Python developers to create, configure, and manage AWS services.
 
-## Solution formulation
+# Solution Formulation
 
 Our solution is comprised of 3 main scripts.
 
@@ -44,7 +51,7 @@ Our solution is comprised of 3 main scripts.
 - Bootstrap - this script is used to configure each node in the cluster.
 - Processing - the python script that executes the data processing commands.
 
-## Conclusion
+# Conclusion
 
 In this tutorial we have gone through the steps needed to spin-up an EMR Cluster, read the relevant data from a table in RDS, executes a set of commands using Pyspark and dump the results to S3.
 
