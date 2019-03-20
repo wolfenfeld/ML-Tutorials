@@ -30,8 +30,8 @@ description:           >
 
 # A shorter description for the sidebar.
 tagline:               >
-  "	Vu men darf hobn moyekh, helft nit keyn koyekh.".
-  Open `_config.yml` to edit this text.
+  "The shoe is the sign!"
+_Life of Brian_
 
 # A list of keywords for your blog
 keywords:              []
@@ -80,7 +80,7 @@ paginate_path:         /page-:num/
 # ========================================================================================
 
 # Sidebar image and theme color of the site.
-accent_image:          /assets/img/sidebar-bg.jpg
+accent_image:          /assets/img/background.jpeg
 accent_color:          rgb(79,177,186)
 
 # This is used for the `theme-color` meta tag,
