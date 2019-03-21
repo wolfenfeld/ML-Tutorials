@@ -25,7 +25,6 @@ title:                 Jewpyter
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
   "The shoe is the sign!".
-<br />
   _Life of Brian_
 
 # A shorter description for the sidebar.
@@ -273,7 +272,7 @@ plugins:
 # ---------------------------------------------------------------------------------------
 
 # theme: jekyll-theme-hydejack
-remote_theme: qwtel/hydejack@v8.4.0
+# remote_theme: qwtel/hydejack@v8.4.0
 
 # SEO Tag
 # ---------------------------------------------------------------------------------------
