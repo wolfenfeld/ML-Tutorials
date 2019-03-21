@@ -25,7 +25,8 @@ title:                 Jewpyter
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
   "The shoe is the sign!".
-  _Life of Brian**_
+  
+  _Life of Brian_
 
 # A shorter description for the sidebar.
 # tagline:               >
