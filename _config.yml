@@ -29,9 +29,9 @@ description:           >
   Open `_config.yml` to edit this text.
 
 # A shorter description for the sidebar.
-tagline:               >
-  "The shoe is the sign!"
-_Life of Brian_
+# tagline:               >
+  # "The shoe is the sign!"
+# _Life of Brian_;
 
 # A list of keywords for your blog
 keywords:              []
