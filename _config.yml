@@ -25,7 +25,7 @@ title:                 Jewpyter
 # Can use markdown, but no more than one paragraph (enforced by `>`)
 description:           >
   "The shoe is the sign!".
-  
+
   _Life of Brian_
 
 # A shorter description for the sidebar.
@@ -50,10 +50,12 @@ author:
 
 # Add links to the sidebar.
 menu:
-  - title:             Example
+  - title:             Big Data
     url:               /example/
-  - title:             Documentation
-    url:               https://hydejack.com/docs/
+  - title:             Machine Learning
+    url:               /machine_learing/
+  - title:             Data Science
+    url:               /data_science/
   - title:             About
     url:               /about/
 
