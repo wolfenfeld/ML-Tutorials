@@ -5,6 +5,12 @@
   touch-events
   prevent-default
 >
+<style>
+      @font-face { font-family: Kohelet; src: url('/assets/fonts/Kohelet.ttf'); }
+      h2 {
+         font-family: Kohelet
+      }
+    </style>
   <header id="_sidebar" class="sidebar" role="banner">
     {% if image.background %}
       {% capture bg_style %}background:{{ image.background }}{% endcapture %}
