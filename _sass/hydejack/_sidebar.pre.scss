@@ -82,6 +82,8 @@ hy-drawer {
     color: #fff; // inline
     border-bottom-color: rgba(255, 255, 255, 0.2); // inline
     &:hover { border-bottom-color: #fff; } // link
+    font-family: Kohelet;
+
   }
 }
 
@@ -134,6 +136,7 @@ hy-drawer.loaded .sidebar {
 
   > h2 {
     margin-top: 0;
+
   }
 }
 
