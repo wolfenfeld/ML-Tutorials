@@ -134,7 +134,9 @@ hy-drawer.loaded .sidebar {
 }
 
 .sidebar-about {
-  @font-face { font-family: Kohelet; src: url('/jewpyter/assets/fonts/Kohelet.ttf'); }
+  @font-face {
+    font-family: Kohelet; src: url('/jewpyter/assets/fonts/Kohelet.ttf');
+   }
 
   .avatar {
     margin-bottom: 1.5rem
