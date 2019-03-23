@@ -1,9 +1,9 @@
 {
   "lang": "en",
-  "name": "Palantíri",
-  "short_name": "Palantíri",
-  "description": "“Best Jekyll Theme by a Mile”. Hydejack is your presence on the web, featuring a blog, portfolio, and resume.",
-  "start_url": "/palantiri/?utm_source=homescreen",
+  "name": "Jewpyter",
+  "short_name": "Jewpyter",
+  "description": "The shoe is the sign!",
+  "start_url": "/jewpyter/?utm_source=homescreen",
   "theme_color": "rgb(25,55,71)",
   "background_color": "#fff",
   "orientation": "portrait",
@@ -18,11 +18,6 @@
       "src": "/jewpyter/assets/icons/favicon@0,5x.png",
       "type": "image/png",
       "sizes": "96x96"
-    },
-    {
-      "src": "/jewpyter/assets/icons/favicon@0,75x.png",
-      "type": "image/png",
-      "sizes": "144x144"
     },
     {
       "src": "/jewpyter/assets/icons/favicon@1x.png",

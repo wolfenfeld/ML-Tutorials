@@ -26,6 +26,9 @@ $font-family:         {{ site.font         | default:"Noto Sans, Helvetica, Aria
 @import "mixins";
 
 @import "reboot-mod";
+@font-face {
+  font-family: Kohelet; src: url('/jewpyter/assets/fonts/Kohelet.ttf');
+ }
 
 {% unless site.hydejack.no_inline_css or jekyll.environment == 'development' %}
   @import "pooleparty/__link__/base";

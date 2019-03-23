@@ -134,9 +134,6 @@ hy-drawer.loaded .sidebar {
 }
 
 .sidebar-about {
-  @font-face {
-    font-family: Kohelet; src: url('/jewpyter/assets/fonts/Kohelet.ttf');
-   }
 
   .avatar {
     margin-bottom: 1.5rem
@@ -144,9 +141,10 @@ hy-drawer.loaded .sidebar {
 
   > h2 {
     margin-top: 0;
+  }
+  > .title {
     font-family: Kohelet;
-
-
+    font-size: 65px
   }
 }
 
