@@ -1,3 +1,6 @@
 ---
 ---
 {% capture include_to_scssify %}{% include styles/style.scss %}{% endcapture %}{% include header.txt %}{{ include_to_scssify | scssify }}
+
+@font-face { font-family: Kohelet; src: url('/jewpyter/assets/fonts/Kohelet.ttf'); }
+      
