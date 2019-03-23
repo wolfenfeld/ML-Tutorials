@@ -5,7 +5,6 @@
   touch-events
   prevent-default
 >
-
   <header id="_sidebar" class="sidebar" role="banner">
     {% if image.background %}
       {% capture bg_style %}background:{{ image.background }}{% endcapture %}
@@ -16,7 +15,6 @@
       {% capture bg_class %}sidebar-bg {% if image != 'none' %}sidebar-overlay{% endif %}{% endcapture %}
     {% endif %}
     <div class="{{bg_class}}" style="{{bg_style}}"></div>
-
     <div class="sidebar-sticky">
       <div class="sidebar-about">
         {% if site.logo %}
