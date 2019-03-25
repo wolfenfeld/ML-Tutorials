@@ -51,10 +51,10 @@ author:
 menu:
   - title:             Big Data
     url:               /big_data/
-  - title:             Machine Learning
-    url:               /machine_learing/
-  - title:             Data Science
-    url:               /data_science/
+  # - title:             Machine Learning
+    # url:               /machine_learing/
+  # - title:             Data Science
+    # url:               /data_science/
   - title:             About
     url:               /about/
 
