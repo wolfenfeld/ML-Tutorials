@@ -1,36 +1,60 @@
 ---
 layout: post
-title: Taming the Hydra
-description: The Proper Way to Launch a Spark Cluster
-image: /assets/img/EMR-post/hydra.jpg
+title: Gouge Away
+description: Incorporating SQOOP in your Data Pipeline
+image: /assets/img/SQOOP-post/scoop.jpg
 noindex: true
 ---
 
-# Taming the Hydra
+# Gouge Away
 
-Whenever you need to slice and dice a massive dataset, and _pandas_ or _SQL_ just can't do the trick - pam pam pam, have no fear _Spark_ is here.
+You have just completed setting up your new and shiny EMR cluster, and want to unleash the full power of _Spark_ on the nearest data-source.
 
-This post comes after long and lonesome search for a tutorial on how to spin-up an EMR Cluster, read the relevant data from a table in RDS, executes a set of commands using Pyspark and load the results to S3.
+All you need to do, is pass the location of the data in your _S3 Bucket_ and employ the parallel capabilities of HDFS.
 
-The goal of this post is to provide an easy and comprehensive, step by step, guide, and save the time and frustration to anyone who wishes to construct such a system.
+However, all your data is stored on a MySQL database.
+
+You can read the data with _Spark_ and a JDBC connector from the database to a _Spark Dataframe_:
+
+<script src="https://gist.github.com/wolfenfeld/44bbc180a022dac7aa1cd85a6e56217d.js">
+</script>
+
+This is nice, but there is a better way.
+
+This post comes after trying several approaches to get the easiest, cleanest, scalable and best performing data ingestion solution for the case of data stored on a MySQL server.
+
+The goal of this post is to provide an easy and comprehensive, step by step, guide, on how to use SQOOP and incorporate it to your EMR job flow.
+
+You can find a a walk-through on how to setup and launch and _EMR cluster_ here.
 
 In this post we will start with formulating the problem, go over the necessary tools and finally describe the proposed solution.
 
 Small disclaimer - an active AWS account is necessary for this tutorial.
+
+# What is Scoop
+
+Apache Sqoop (SQL to Hadoop) is a tool designed for efficient transfer of data between Apache Hadoop and structured data-stores (in our case - relational databases).
+
+I will not get into too much details on architecture of SQOOP, and only explain the import processes in high level.
+
+Sqoop automates most of data transfer, relying on the database to describe the schema for the data to be imported. Sqoop uses MapReduce to import and export the data, which provides parallel operation as well as fault tolerance.
+
+![Full-width image](https://wolfenfeld.github.io/jewpyter/assets/img/SQOOP-post/sqoop-arch.png){:.lead data-width="432" data-height="414"} Image Credits devx.com. {:.figure}
 
 # Problem Formulation
 
 The problem that we are facing can be broken down into 3 (as always) sub-problems:
 
 - Spinning up a cluster with all the relevant dependencies.
-- Connecting to a data source for fetching and loading the data.
-- Processing the raw data using the _Spark_ framework.
+- Connecting to a MySQL server and fetching the data with SQOOP.
+- Storing the data in S3.
 
 # Tools Description
 
 In our solution we will use the following tools:
 
 - Apache Spark - an open-source distributed general-purpose cluster-computing framework.
+- SQOOP - a tool designed to transfer data between Hadoop and relational databases.
 - Pyspark - the Python API for Spark.
 - EMR service - Elastic Map Reduce is AWS managed Hadoop framework.
 - S3 service - AWS storage service.
