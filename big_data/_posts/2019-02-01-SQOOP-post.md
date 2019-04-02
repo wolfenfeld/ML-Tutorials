@@ -8,168 +8,114 @@ noindex: true
 
 # Gouge Away
 
-You have just completed setting up your new and shiny EMR cluster, and want to unleash the full power of _Spark_ on the nearest data-source.
+You have just completed setting up your new and shiny _EMR_ cluster, and want to unleash the full power of _Spark_ on the nearest data-source.
 
-All you need to do, is pass the location of the data in your _S3 Bucket_ and employ the parallel capabilities of HDFS.
+All you need to do, is pass the location of the data in your _S3 Bucket_ and employ the parallel capabilities of _HDFS_.
 
-However, all your data is stored on a MySQL database.
+However, all your data is stored on a _MySQL_ database.
 
-You can read the data with _Spark_ and a JDBC connector from the database to a _Spark Dataframe_:
+One thing you can do is read the data with _Spark_ and a _JDBC_ connector from the database to a _Spark Dataframe_:
 
 <script src="https://gist.github.com/wolfenfeld/44bbc180a022dac7aa1cd85a6e56217d.js">
 </script>
 
 This is nice, but there is a better way.
 
-This post comes after trying several approaches to get the easiest, cleanest, scalable and best performing data ingestion solution for the case of data stored on a MySQL server.
+This post comes after trying several approaches to get the easiest, cleanest, scalable and best performing data ingestion solution for the case of data stored on a _MySQL_ server.
 
-The goal of this post is to provide an easy and comprehensive, step by step, guide, on how to use SQOOP and incorporate it to your EMR job flow.
+The goal of this post is to provide an easy and comprehensive, step by step, guide, on how to use _Sqoop_ and incorporate it to your _EMR_ job flow.
 
-You can find a a walk-through on how to setup and launch and _EMR cluster_ here.
+You can find a a walk-through on how to setup and launch an _EMR_ cluster here.
 
-In this post we will start with formulating the problem, go over the necessary tools and finally describe the proposed solution.
+In this post we will start with a brief introduction to _Sqoop_, continue with formulating the problem, go over the necessary tools and finally describe the proposed solution.
 
-Small disclaimer - an active AWS account is necessary for this tutorial.
+Small disclaimer - an active _AWS_ account is necessary for this tutorial.
 
 # What is Scoop
 
-Apache Sqoop (SQL to Hadoop) is a tool designed for efficient transfer of data between Apache Hadoop and structured data-stores (in our case - relational databases).
+_Apache Sqoop_ (_SQL_ to _Hadoop_) is a tool designed for efficient transfer of data between _Apache Hadoop_ and structured data-stores (in our case - relational databases).
 
-I will not get into too much details on architecture of SQOOP, and only explain the import processes in high level.
+We will only scratch the surface on architecture of _Sqoop_, and briefly explain the import processes in high level.
 
-Sqoop automates most of data transfer, relying on the database to describe the schema for the data to be imported. Sqoop uses MapReduce to import and export the data, which provides parallel operation as well as fault tolerance.
+_Sqoop_ automates most of data transfer, relying on the database to describe the schema for the data to be imported. _Sqoop_ uses _MapReduce_ to import and export the data, which provides parallel operation as well as fault tolerance.
 
-![Full-width image](https://wolfenfeld.github.io/jewpyter/assets/img/SQOOP-post/sqoop-arch.png){:.lead data-width="432" data-height="414"} Image Credits devx.com. {:.figure}
+<figure>
+  <img alt="An image with a caption" src="/jewpyter/assets/img/SQOOP-post/sqoop-arch.png" class="lead" data-width="432" data-height="414">
+  <figcaption>Image Credits devx.com.</figcaption>
+</figure>
+
+The import procedure (as described in the diagram above) goes through the following steps:
+
+1. _Scoop_ (client) pulls the metadata from the database.
+2. Launches several _MapReduce_ jobs.
+3. Each _MapReduce_ job pulls its share of data from the database.
+4. Each _MapReduce_ job writes the data to its target location.
+
+Later we will show how to configure the number of _MapReduce_ jobs to best fit the number of connections to the database.
 
 # Problem Formulation
 
 The problem that we are facing can be broken down into 3 (as always) sub-problems:
 
 - Spinning up a cluster with all the relevant dependencies.
-- Connecting to a MySQL server and fetching the data with SQOOP.
-- Storing the data in S3.
+- Connecting to a _MySQL_ server and fetching the data with _Sqoop_.
+- Storing the data.
 
 # Tools Description
 
 In our solution we will use the following tools:
 
-- Apache Spark - an open-source distributed general-purpose cluster-computing framework.
-- SQOOP - a tool designed to transfer data between Hadoop and relational databases.
-- Pyspark - the Python API for Spark.
-- EMR service - Elastic Map Reduce is AWS managed Hadoop framework.
-- S3 service - AWS storage service.
-- Boto 3 - Boto is the AWS SDK for Python. It enables Python developers to create, configure, and manage AWS services.
+- _Apache Spark_ - an open-source distributed general-purpose cluster-computing framework.
+- _Sqoop_ - a tool designed to transfer data between _Hadoop_ and relational databases.
+- _Pyspark_ - the Python API for _Spark_.
+- _EMR_ service - _Elastic Map Reduce_ is _AWS_ managed _Hadoop_ framework.
+- _S3_ service - _AWS_ storage service.
+- Boto 3 - Boto is the AWS SDK for Python. It enables Python developers to create, configure, and manage _AWS_ services.
 
 # Solution Formulation
 
-And now for the good stuff.
+In my previous post we have seen how to spin up an _EMR_ cluster, pull the data from a _MySQL_ server (using _Spark_) and load it to _S3_.
 
-Our solution is broken down to 3 main scripts and a configuration file.
+We will use the same code, and only swap the _"extract_data_from_db"_ method with _"extract_data_from_db_with_sqoop"_.
 
-- EMR Handler - the python script that is in charge of spinning-up, configuring and running the EMR cluster.
+Another thing you will need to do is add {'Name': 'Sqoop'} to the applications list (in the **load_cluster** method in the **EMRHandler** class)
+
+```
+Applications=[{'Name': 'Spark'}, {'Name': 'JupyterHub'}, {'Name': 'Hive'},{'Name': 'Sqoop'}]
+```
+
+Our solution (as in the previous post) is broken down to 3 main scripts and a configuration file.
+
+- EMR Handler - the python script that is in charge of spinning-up, configuring and running the _EMR_ cluster.
 - Bootstrap - this script is used to configure each node in the cluster.
 - Processing - the python script that executes the data processing commands.
 
-We will start with the EMR Handler - in the following gist we see the initialization of the EMR Handler object with the values form the configuration file. Also, we find the _load cluster_ method - which calls the the EMR service using the _boto client_.
+As stated, the solution is identical to the one described in the previous post apart from extracting method.
 
-<script src="https://gist.github.com/wolfenfeld/7920ff08c4e1e0d4274f752be1a40050.js">
+In the **extract_data_from_db_with_sqoop** method we are using the _os.system(sqoop_command)_ command to execute the _Sqoop import_ command.
+
+It is comprised of the following parameters:
+
+- driver - the _MySQL_ driver
+- connect - the database url
+- username and password - the credentials for connecting to the database
+- query - the query of the extracted data
+- num-mappers - the number of mappers (for each node) that will fetch the data
+- split-by - the column on which the mappers divide among themselves the workload
+- target-dir - the destination of the transfered data
+- --as-parquetfile - a flag indicating the format of the extracted data (parquet file in our case)
+
+<script src="https://gist.github.com/wolfenfeld/ecbaa81c8f971d7cf667ad26d77fe40a.js">
 </script>
 
-Lets drill down on each of the arguments of the _load cluster_ method, for they are the essential part of configuring the cluster to suite our task.
+Several important points:
 
-- Name - the name of the cluster.
-- LogUri - where the generated logs are stored.
-- ReleaseLabel - the software version (5.20 at the time when this post was written)
-- Instances - the instance, of which the cluster is composed of, configuration .
-- Applications - application necessary for running the tasks at hand.
-- BootstrapActions - the configuration of the actions that each node (instance) will take prior to processing phase, in our case setting all the dependencies.
-- JobFlowRole, ServiceRole - Roles for security.
-- Configurations - spark environment configurations.
-- Tags - for reporting or filtering.
-- Steps - the steps that are submitted.
-
-For the sake of readability, a method is defined for each major argument:,
-
-**Instance Configuration**
-
-Here, I believe, the parameters are very self explanatory, apart from InstanceCount, that receives an integer _N_ that defines _N-1_ slaves and a single master:
-
-<script src="https://gist.github.com/wolfenfeld/e86dcd95f13346a4efd01478ee762a48.js">
-</script>
-
-**Bootstrap Actions Configuration**
-
-Defines where the Bootstrap script is located on S3:
-
-<script src="https://gist.github.com/wolfenfeld/09c152c3faa8c7151dd304be18cc1538.js">
-</script>
-
-**Spark Configuration**
-
-Defines the environment variables necessary to use _Pyspark_ in the submitted tasks (we are going to use the _Conda's_ python interpreter as our _Pyspark_ interpreter):
-
-<script src="https://gist.github.com/wolfenfeld/99302e69de33e49901990c7a48c6033f.js">
-</script>
-
-An important part here is the _extra-paths_ section that is needed for the use of the MySQL connector.
-
-**Tag Configuration**
-
-<script src="https://gist.github.com/wolfenfeld/41a42255bd145f23183cbd46331cfc77.js">
-</script>
-
-**Steps Configuration**
-
-Defines the steps that will run one spark-submit will be initiated:
-
-<script src="https://gist.github.com/wolfenfeld/03814c02499f44b48b722379ab3900fd.js">
-</script>
-
-An important part in the 'Run Computations Script' step is the '--packages' parameters that are needed for the MySQL connector.
-
-**Auxiliary Functions**
-
-For uploading the files to S3:
-
-<script src="https://gist.github.com/wolfenfeld/72649e2bb2f882d73edbb631f58f095d.js">
-</script>
-
-**Run Function**
-
-Constructing the EMR handler, uploading the necessary files to S3, and loading the cluster:
-
-<script src="https://gist.github.com/wolfenfeld/271e6d96e2e6e696147c7562adae3c20.js">
-</script>
-
-**EMR Service Configuration File**
-
-A yml file containing all the necessary parameters:
-
-<script src="https://gist.github.com/wolfenfeld/a9459158a98f191c338e7aaa17c4e26e.js">
-</script>
-
-**Bootstrap Actions Script**
-
-Installing _Conda_ and all the necessary dependencies.
-
-<script src="https://gist.github.com/wolfenfeld/1a41bc595d21ed1f71421344d27e1360.js">
-</script>
-
-**Process Data Script**
-
-The file that is uploaded to S3 and executed in one of the spark-submit steps.
-
-It contains a method for extracting data from RDS using _Spark_, processing this data, and loading the results to S3,
-
-The processing itself is only a select column operation, and can be substituted by any _Spark_ functionality that you wish.
-
-This file also shows the proper way to use a logger within the EMR cluster.
-
-<script src="https://gist.github.com/wolfenfeld/05c26adec1f6b5185da08e9317ffc74e.js">
-</script>
+1. As you can see, we are saving the data and then reading with _Spark_ the parquet file and returning the Dataframe.
+2. I have made several attempts to extract the data to a _S3_ bucket without success (EMR release 5.22.0) - this should probably be fixed in later releases.
+3. The bigger the number of mappers you allocate - the faster the extraction be completed. However, you should not exceed the number of database connections.
 
 # Conclusion
 
-In this tutorial we have gone through the steps needed to spin-up an EMR Cluster, read the relevant data from a table in RDS, executes a set of commands using Pyspark and finally load the results to S3.
+In this tutorial we have gone through the steps needed to spin-up an _EMR_ Cluster, read the relevant data from a _MySQL_ database, and finally load the results to _S3_.
 
-I hope this guide helped shed some light on how to use EMR to achieve the relevant results and would like to thank @nimrod_milo for helping me on this glorious quest.
+I hope this guide helped shed some light on how to use _EMR_ and _Sqoop_ to achieve the relevant results.
