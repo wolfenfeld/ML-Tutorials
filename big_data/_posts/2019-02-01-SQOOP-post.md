@@ -40,7 +40,7 @@ We will only scratch the surface on architecture of _Sqoop_, and briefly explain
 _Sqoop_ automates most of data transfer, relying on the database to describe the schema for the data to be imported. _Sqoop_ uses _MapReduce_ to import and export the data, which provides parallel operation as well as fault tolerance.
 
 <figure>
-  <img alt="An image with a caption" src="/jewpyter/assets/img/SQOOP-post/sqoop-arch.png" class="lead" data-width="432" data-height="414">
+  <img alt="An image with a caption" src="/assets/img/SQOOP-post/sqoop-arch.png" class="lead" data-width="432" data-height="414">
   <figcaption>Image Credits devx.com.</figcaption>
 </figure>
 
