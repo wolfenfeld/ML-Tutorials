@@ -8,7 +8,7 @@ noindex: true
 
 # Gouge Away
 
-You have just completed setting up your new and shiny _EMR_ cluster, and want to unleash the full power of _Spark_ on the nearest data-source.
+You have just [completed](../2019-02-01-EMR-post) setting up your new and shiny _EMR_ cluster, and want to unleash the full power of _Spark_ on the nearest data-source.
 
 All you need to do, is pass the location of the data in your _S3 Bucket_ and employ the parallel capabilities of _HDFS_.
 
@@ -25,7 +25,7 @@ This post comes after trying several approaches to get the easiest, cleanest, sc
 
 The goal of this post is to provide an easy and comprehensive, step by step, guide, on how to use _Sqoop_ and incorporate it to your _EMR_ job flow.
 
-You can find a a walk-through on how to setup and launch an _EMR_ cluster here.
+You can find a a walk-through on how to setup and launch an _EMR_ cluster [here](../2019-02-01-EMR-post).
 
 In this post we will start with a brief introduction to _Sqoop_, continue with formulating the problem, go over the necessary tools and finally describe the proposed solution.
 
@@ -74,7 +74,7 @@ In our solution we will use the following tools:
 
 # Solution Formulation
 
-In my previous post we have seen how to spin up an _EMR_ cluster, pull the data from a _MySQL_ server (using _Spark_) and load it to _S3_.
+In my [previous post](../2019-02-01-EMR-post) we have seen how to spin up an _EMR_ cluster, pull the data from a _MySQL_ server (using _Spark_) and load it to _S3_.
 
 We will use the same code, and only swap the _"extract_data_from_db"_ method with _"extract_data_from_db_with_sqoop"_.
 
@@ -84,13 +84,13 @@ Another thing you will need to do is add {'Name': 'Sqoop'} to the applications l
 Applications=[{'Name': 'Spark'}, {'Name': 'JupyterHub'}, {'Name': 'Hive'},{'Name': 'Sqoop'}]
 ```
 
-Our solution (as in the previous post) is broken down to 3 main scripts and a configuration file.
+Our solution ([as in the previous post](../2019-02-01-EMR-post)) is broken down to 3 main scripts and a configuration file.
 
 - EMR Handler - the python script that is in charge of spinning-up, configuring and running the _EMR_ cluster.
 - Bootstrap - this script is used to configure each node in the cluster.
 - Processing - the python script that executes the data processing commands.
 
-As stated, the solution is identical to the one described in the previous post apart from extracting method.
+As stated, the solution is identical to the one described in the [previous post](../2019-02-01-EMR-post) apart from extracting method.
 
 In the **extract_data_from_db_with_sqoop** method we are using the _os.system(sqoop_command)_ command to execute the _Sqoop import_ command.
 
