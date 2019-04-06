@@ -51,8 +51,8 @@ author:
 menu:
   - title:             Big Data
     url:               /big-data/
-  # - title:             Machine Learning
-    # url:               /machine_learing/
+  - title:             Machine Learning
+    url:               /machine-learning/
   # - title:             Data Science
     # url:               /data_science/
   - title:             About

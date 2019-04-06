@@ -2,6 +2,7 @@
 layout: about
 title: About
 menu: true
+order: 3
 ---
 
 **Data Scientist**: The data-lake was angry that day, my friends - like an old analyst trying to use vim for the first time. I ran about fifty cells in the notebook and suddenly, the great dataset appeared before me.
