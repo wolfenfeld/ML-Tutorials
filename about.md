@@ -28,3 +28,5 @@ I tell you he was ten Terabytes if it was uncompressed. As if sensing my presenc
 After years of reading, I decided to write.
 
 Jewpyter comes from the love of Data Science, Tech and Humor.
+
+[slides](/slides/classification_demo.slides.html)
