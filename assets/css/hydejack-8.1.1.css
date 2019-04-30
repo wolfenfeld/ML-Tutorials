@@ -9,5 +9,5 @@
     font-size: 54px;
 }
 .content img{
-  margin:auto;
+  display: :block;
 }
