@@ -9,9 +9,6 @@
     font-size: 54px;
 }
 .content img{
-  display: :block;
-  margin: auto
-}
-hy-img{
-  display: :block;
+  display: block;
+  margin: auto;
 }
