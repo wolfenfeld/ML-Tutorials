@@ -19,7 +19,7 @@ One thing you can do is read the data with _Spark_ and a _JDBC_ connector from t
 <script src="https://gist.github.com/wolfenfeld/44bbc180a022dac7aa1cd85a6e56217d.js">
 </script>
 
-This is nice, but there is a better way.
+This is nice, but there is a better way!
 
 This post comes after trying several approaches to get the easiest, cleanest, scalable and best performing data ingestion solution for the case of data stored on a _MySQL_ server.
 
@@ -37,7 +37,7 @@ _Apache Sqoop_ (_SQL_ to _Hadoop_) is a tool designed for efficient transfer of 
 
 We will only scratch the surface on architecture of _Sqoop_, and briefly explain the import processes in high level.
 
-_Sqoop_ automates most of data transfer, relying on the database to describe the schema for the data to be imported. _Sqoop_ uses _MapReduce_ to import and export the data, which provides parallel operation as well as fault tolerance.
+_Sqoop_ automates most of the data transfer, relying on the database to describe the schema for the data to be imported. _Sqoop_ uses _MapReduce_ to import and export the data, which provides parallel operation as well as fault tolerance.
 
 <figure>
   <img alt="An image with a caption" src="/assets/img/SQOOP-post/sqoop-arch.png" class="lead" data-width="432" data-height="414">
