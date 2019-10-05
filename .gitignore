@@ -1,3 +1,5 @@
 .sass-cache/
 _site/
 palantiri-gh-pages/
+/notebooks/__pycache__
+notebooks/.ipynb_checkpoints
