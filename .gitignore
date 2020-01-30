@@ -1,4 +1,5 @@
 .sass-cache/
+.idea/
 _site/
 palantiri-gh-pages/
 /notebooks/__pycache__
